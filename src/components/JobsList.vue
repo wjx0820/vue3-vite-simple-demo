@@ -16,30 +16,27 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
-import Job from '@/types/Job'
-import OrderTerm from '@/types/OrderTerm';
-export default defineComponent({
-  props: {
-    jobs: {
-      type: Array as PropType<Job[]>,
-      required: true
-    },
-    order: {
-      required: true,
-      type: String as PropType<OrderTerm>
-    }
-  },
-  setup(props) {
-    const orderedJobs = computed(() => {
-      return [...props.jobs].sort((a: Job, b: Job) => {
-        return a[props.order] > b[props.order] ? 1 : -1
-      })
-    })
+<script setup lang="ts">
+import { computed, defineProps } from 'vue'
+import type { PropType } from 'vue'
+import type Job from '@/types/Job'
+import type OrderTerm from '@/types/OrderTerm';
 
-    return { orderedJobs }
+const props = defineProps({
+  jobs: {
+    type: Array as PropType<Job[]>,
+    required: true
   },
+  order: {
+    required: true,
+    type: String as PropType<OrderTerm>
+  }
+})
+
+const orderedJobs = computed(() => {
+  return [...props.jobs].sort((a: Job, b: Job) => {
+    return a[props.order] > b[props.order] ? 1 : -1
+  })
 })
 </script>
 
